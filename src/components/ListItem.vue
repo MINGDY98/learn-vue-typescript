@@ -1,6 +1,6 @@
 <template>
   <ul class="news-list">
-    <li v-for="news in listItems" :key="news.id" class="post">
+    <li v-for="news in items" :key="news.id" class="post">
       <div class="points">
         {{ news.points || 0 }}
       </div>
@@ -28,21 +28,41 @@
           }}</router-link>
         </small>
         <small v-if="news.time_ago" class="link-text">
-          {{ news.time_ago }}
+          {{ timeAgo(news) }}
         </small>
       </div>
     </li>
   </ul>
 </template>
 
-<script>
-export default {
-  computed: {
-    listItems() {
-      return this.$store.getters.fetchedList;
+<script lang="ts">
+import { NewsItem } from "@/api";
+import Vue, { PropType } from "vue";
+export default Vue.extend({
+  props: {
+    items: {
+      type: Array as PropType<NewsItem[]>,
+      required: true,
     },
   },
-};
+
+  methods: {
+    timeAgo(news: NewsItem): string {
+      //파라메터를 받기 위해 computed에 선언했다가 옮김
+      return news.time_ago.concat(". 2022");
+    },
+  },
+
+  computed: {
+    // listItems(): any{
+    //   return this.$store.getters.fetchedList;
+    // },
+    // timeAgo(): string {
+    //   //computed로 옮겨쓰면, 디버그가 쉬움.
+    //   return this.items[0].time_ago.concat();
+    // },
+  },
+});
 </script>
 
 <style scoped>
