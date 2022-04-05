@@ -1,14 +1,17 @@
 import Vue from "vue";
-import Vuex from "vuex";
-import { state } from "./state";
+import Vuex, { StoreOptions } from "vuex";
+import { RootState, state } from "./state";
+import { mutations } from "./mutations";
 // import getters from "./getters.js";
 // import mutations from "./mutations.js";
 // import actions from "./actions.js";
 
 Vue.use(Vuex);
-
-const store = {
+//만약 mutation에서 mu만 쳤을때 자동완성을 원한다면 store 타입으로
+//StoreOptions를 붙여준다. 이 프로젝트에서는 RootState로 제네릭 타입을 넣어주고.
+const store: StoreOptions<RootState> = {
   state: state,
+  mutations: mutations,
 };
 
 export default new Vuex.Store(store);
