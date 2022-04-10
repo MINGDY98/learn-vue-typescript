@@ -13,7 +13,7 @@ const mutations = {
 //Vuex 내부에서 Mutation을 쓰기 때문에 Mutations라고 꼭 s를 붙여야함
 //이름 다른 걸로 바꿔도 무방 ex MyCustomMutations
 type Mutations = typeof mutations;
-export { mutations, Mutations };
+export { MutationTypes, mutations, Mutations };
 
 // export default {
 //   SET_NEWS(state, news) {
