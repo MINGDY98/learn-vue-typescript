@@ -1,5 +1,6 @@
 // store/types.ts
-import { CommitOptions, Store } from "vuex";
+import { CommitOptions, DispatchOptions, Store } from "vuex";
+import { Actions } from "./actions";
 import { Mutations } from "./mutations";
 import { RootState } from "./state";
 
@@ -11,8 +12,18 @@ type MyMutations = {
     options?: CommitOptions
   ): ReturnType<Mutations[K]>;
 };
-
-export type MyStore = Omit<Store<RootState>, "commit"> & MyMutations;
+//Actions(19번째줄)와 DispatchopOptions(20번째줄)는
+// 스토어 내부적으로 있는 타입.ctrl+space로 가져오기
+type MyActions = {
+  dispatch<K extends keyof Actions>(
+    key: K,
+    payload?: Parameters<Actions[K]>[1],
+    options?: DispatchOptions
+  ): ReturnType<Actions[K]>;
+};
+export type MyStore = Omit<Store<RootState>, "commit" | "dispatch"> &
+  MyMutations &
+  MyActions;
 
 /***
  * MyMutations은 별다른게 아니라, 기존 store스펙에서
