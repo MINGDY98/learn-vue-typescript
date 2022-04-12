@@ -1,6 +1,7 @@
 // store/types.ts
 import { CommitOptions, DispatchOptions, Store } from "vuex";
 import { Actions } from "./actions";
+import { Getters } from "./getters";
 import { Mutations } from "./mutations";
 import { RootState } from "./state";
 
@@ -21,9 +22,26 @@ type MyActions = {
     options?: DispatchOptions
   ): ReturnType<Actions[K]>;
 };
-export type MyStore = Omit<Store<RootState>, "commit" | "dispatch"> &
+
+//type A = keyof Getters;
+type MyGetters = {
+  getters: {
+    [K in keyof Getters]: ReturnType<Getters[K]>;
+  };
+};
+//mapped타입패턴의 사용.
+//keyof getters.ts속 타입들을 반복해서 돌리는 것임.
+//그렇게해서key를 뽑아낸 다음. key에 해당하는 속성함수의 반환타입을
+//key value형태로 뽑고, 그 key에 해당하는 반환타입을 매칭해주는 것임.
+//속성함수 이름이 왼쪽으로 들어오고, 오른쪽은 해당 속성함수의 반환타입 - 컴포넌트 레벨에서fetchedNews를 했을때 타입이 정해짐.
+
+export type MyStore = Omit<
+  Store<RootState>,
+  "commit" | "dispatch" | "getters"
+> &
   MyMutations &
-  MyActions;
+  MyActions &
+  MyGetters;
 
 /***
  * MyMutations은 별다른게 아니라, 기존 store스펙에서
