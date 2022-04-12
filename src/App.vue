@@ -34,9 +34,11 @@ export default Vue.extend({
     },
   },
   async created() {
+    this.$store;
     //this.$store.state;
-    this.$store.commit(MutationTypes.SET_NEWS, 10);
-    const response = await this.$store.dispatch(ActionTypes.FETCH_NEWS);
+    //this.$store.commit(MutationTypes.SET_NEWS, 10);
+    //const response = await this.$store.dispatch(ActionTypes.FETCH_NEWS);
+
     //response가 void로 뜬다? 왜 그러지? 그 이유는 dispatch의 반환타입이 Promise<void>
     /**
      * FETCH_NEWS의 반환타입이
